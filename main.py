@@ -4,7 +4,7 @@ import utils
 
 def install_cockroachdb_dependencies():
     # libncurses-dev
-    utils.call("apt install libncurses5-dev")
+    utils.call("apt install libncurses5-dev -y")
 
     # golang
     utils.call("wget https://golang.org/dl/go1.15.8.linux-amd64.tar.gz")
@@ -18,7 +18,7 @@ def install_cockroachdb_dependencies():
     utils.call("npm install --global yarn")
 
     # install bazel
-    utils.call("apt install curl gnupg")
+    utils.call("apt install curl gnupg -y")
     utils.call("curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg")
     utils.call("mv bazel.gpg /etc/apt/trusted.gpg.d/")
     utils.call(
@@ -26,9 +26,25 @@ def install_cockroachdb_dependencies():
     utils.call("sudo apt update -y && sudo apt install bazel -y")
     utils.call("sudo apt update -y && sudo apt full-upgrade -y")
 
+    utils.call("apt install cmake -y")
+
+#    utils.call("source /root/.bashrc")
+
+
+def clone_upstream_cockroach_repo():
+
+    # original cockroachdb
+    utils.call("mkdir -p $(go env GOPATH)/src/github.com/cockroachdb")
+    utils.call("cd $(go env GOPATH)/src/github.com/cockroachdb; "
+               "git clone https://github.com/cockroachdb/cockroach; "
+               "cd cockroach; "
+               "git fetch origin staging-20.1.9; git checkout staging-20.1.9; "
+               "git clean -fdx; make clean; make")
+    utils.call("mv $(go env GOPATH)/src/github.com/cockroachdb/cockroach /root")
+
 
 def clone_cockroach_repo():
-    utils.call("mkdir -p $(go env GOPATH)/src/github.com/cockroachdb")
+    # utils.call("mkdir -p $(go env GOPATH)/src/github.com/cockroachdb")
     utils.call("cd $(go env GOPATH)/src/github.com/cockroachdb;"
                "git clone https://github.com/jl3953/cockroach3.0 cockroach")
 
@@ -48,6 +64,7 @@ def change_cockroach_vendor_origin():
 
 def install_cockroachdb():
     install_cockroachdb_dependencies()
+    clone_upstream_cockroach_repo()
     clone_cockroach_repo()
     build_cockroach_from_scratch()
     change_cockroach_vendor_origin()
@@ -61,12 +78,12 @@ def setup_vimrc():
 
 
 def main():
-    utils.call("apt update")
-    utils.call("apt upgrade -y")
-    utils.call("apt install gnuplot-x11 -y")
-    utils.call("apt install htop -y")
-    utils.call("apt install feh -y")
-    setup_vimrc()
+    #utils.call("apt update")
+    #utils.call("apt upgrade -y")
+    #utils.call("apt install gnuplot-x11 -y")
+    #utils.call("apt install htop -y")
+    #utils.call("apt install feh -y")
+    #setup_vimrc()
 
     install_cockroachdb()
 
