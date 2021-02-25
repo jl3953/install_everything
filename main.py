@@ -77,15 +77,44 @@ def setup_vimrc():
     utils.call("echo 'set tabstop=4 shiftwidth=4 expandtab' >> /root/.vimrc")
 
 
-def main():
-    utils.call("apt update")
-    #utils.call("apt upgrade -y")
-    utils.call("apt install gnuplot-x11 -y")
-    utils.call("apt install htop -y")
-    utils.call("apt install feh -y")
-    #setup_vimrc()
+def install_grpc():
+    utils.call("export MY_INSTALL_DIR=/root/.local; "
+               "mkdir -p $MY_INSTALL_DIR")
+    utils.call("apt install -y build-essential autoconf libtool pkg-config")
+    utils.call("cd /root; "
+               "git clone --recurse-submodules -b v1.35.0 https://github.com/grpc/grpc")
+    utils.call("export MY_INSTALL_DIR=/root/.local; "
+               'export PATH="$PATH:$MY_INSTALL_DIR/bin"; '
+               "cd /root; "
+               "mkdir -p cmake/build; pushd cmake/build; "
+               "cmake -DgRPC_INSTALL=ON -DgRPC_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR ../..; "
+               "make -j; "
+               "make install")
+    utils.call("export MY_INSTALL_DIR=/root/.local; "
+               'export PATH="$PATH:$MY_INSTALL_DIR/bin"; '
+               "echo 'PATH=$PATH:$MY_INSTALL_DIR/bin' >> /root/.bashrc; ")
 
-    install_cockroachdb()
+
+def install_grpc_go():
+    utils.call("export GO111MODULE=on; "
+               "go get google.golang.org/protobuf/cmd/protoc-gen-go google.golang.org/grpc/cmd/protoc-gen-go-grpc; "
+               'export PATH="$PATH:$(go env GOPATH)/bin"')
+    utils.call("cd /root; "
+               "git clone -b v1.35.0 https://github.com/grpc/grpc-go; ")
+
+
+def main():
+    # utils.call("apt update")
+    # #utils.call("apt upgrade -y")
+    # utils.call("apt install gnuplot-x11 -y")
+    # utils.call("apt install htop -y")
+    # utils.call("apt install feh -y")
+    # #setup_vimrc()
+    #
+    # install_cockroachdb()
+
+    install_grpc()
+    install_grpc_go
 
     return 0
 
