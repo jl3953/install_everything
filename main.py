@@ -24,7 +24,7 @@ def install_cockroachdb_dependencies():
     utils.call(
         "echo 'deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8' | sudo tee /etc/apt/sources.list.d/bazel.list")
     utils.call("sudo apt update -y && sudo apt install bazel -y")
-    utils.call("sudo apt update -y && sudo apt full-upgrade -y")
+    #utils.call("sudo apt update -y && sudo apt full-upgrade -y")
 
     utils.call("apt install cmake -y")
 
@@ -78,11 +78,11 @@ def setup_vimrc():
 
 
 def main():
-    #utils.call("apt update")
+    utils.call("apt update")
     #utils.call("apt upgrade -y")
-    #utils.call("apt install gnuplot-x11 -y")
-    #utils.call("apt install htop -y")
-    #utils.call("apt install feh -y")
+    utils.call("apt install gnuplot-x11 -y")
+    utils.call("apt install htop -y")
+    utils.call("apt install feh -y")
     #setup_vimrc()
 
     install_cockroachdb()
