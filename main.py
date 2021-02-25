@@ -85,7 +85,7 @@ def install_grpc():
                "git clone --recurse-submodules -b v1.35.0 https://github.com/grpc/grpc")
     utils.call("export MY_INSTALL_DIR=/root/.local; "
                'export PATH="$PATH:$MY_INSTALL_DIR/bin"; '
-               "cd /root; "
+               "cd /root/grpc; "
                "mkdir -p cmake/build; pushd cmake/build; "
                "cmake -DgRPC_INSTALL=ON -DgRPC_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR ../..; "
                "make -j; "
