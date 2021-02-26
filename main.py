@@ -57,9 +57,11 @@ def build_cockroach_from_scratch():
 
 
 def change_cockroach_vendor_origin():
-    utils.call("cd $(go env GOPATH)/src/github.com/cockroachdb/cockroach/vendor;"
-               "git remote rename origin upstream;"
-               "git remote add origin https://github.com/jl3953/vendored2")
+    utils.call("cd $(go env GOPATH)/src/github.com/cockroachdb/cockroach/vendor; "
+               "git remote rename origin upstream; "
+               "git remote add origin https://github.com/jl3953/vendored2; "
+               "git fetch origin jacks_code_again; "
+               "git checkout jacks_code_again; ")
 
 
 def install_cockroachdb():
