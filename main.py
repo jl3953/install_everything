@@ -120,7 +120,7 @@ def install_smdbrpc():
                "export GO111MODULE=on  # Enable module mode; "
                "go get google.golang.org/protobuf/cmd/protoc-gen-go \
          google.golang.org/grpc/cmd/protoc-gen-go-grpc"
-               "protoc --go_out=../go --go-grpc_out=../go *.proto; ")
+               "protoc --go_out=../go/build/gen --go-grpc_out=../go/build/gen *.proto; ")
 
 
 def main():
