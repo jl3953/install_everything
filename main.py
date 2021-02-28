@@ -24,15 +24,15 @@ def install_cockroachdb_dependencies():
     utils.call(
         "echo 'deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8' | sudo tee /etc/apt/sources.list.d/bazel.list")
     utils.call("sudo apt update -y && sudo apt install bazel -y")
-    #utils.call("sudo apt update -y && sudo apt full-upgrade -y")
+    # utils.call("sudo apt update -y && sudo apt full-upgrade -y")
 
     utils.call("apt install cmake -y")
+
 
 #    utils.call("source /root/.bashrc")
 
 
 def clone_upstream_cockroach_repo():
-
     # original cockroachdb
     utils.call("mkdir -p $(go env GOPATH)/src/github.com/cockroachdb")
     utils.call("cd $(go env GOPATH)/src/github.com/cockroachdb; "
@@ -105,18 +105,36 @@ def install_grpc_go():
                "git clone -b v1.35.0 https://github.com/grpc/grpc-go; ")
 
 
-def main():
-    # utils.call("apt update")
-    # #utils.call("apt upgrade -y")
-    # utils.call("apt install gnuplot-x11 -y")
-    # utils.call("apt install htop -y")
-    # utils.call("apt install feh -y")
-    # #setup_vimrc()
-    #
-    # install_cockroachdb()
+def install_smdbrpc_dependencies():
+    # YOU BETTER HAVE INSTALLED GO AT THIS POINT
+    utils.call("apt install -y protobuf-compiler")
+    utils.call("export GO111MODULE=on  # Enable module mode; "
+               "go get google.golang.org/protobuf/cmd/protoc-gen-go \
+         google.golang.org/grpc/cmd/protoc-gen-go-grpc")
 
-    install_grpc()
-    install_grpc_go
+
+def install_smdbrpc():
+    utils.call("cd /root; "
+               "git clone https://github.com/jl3953/smdbrpc; "
+               "cd smdbrpc/proto; "
+               "protoc --go_out=../go --go-grpc_out=../go *.proto; ")
+
+
+def main():
+    # # utils.call("apt update")
+    # # #utils.call("apt upgrade -y")
+    # # utils.call("apt install gnuplot-x11 -y")
+    # # utils.call("apt install htop -y")
+    # # utils.call("apt install feh -y")
+    # # #setup_vimrc()
+    # #
+    # # install_cockroachdb()
+    #
+    # install_grpc()
+    # install_grpc_go
+
+    install_smdbrpc_dependencies()
+    install_smdbrpc()
 
     return 0
 
