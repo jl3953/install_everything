@@ -120,6 +120,17 @@ def install_smdbrpc():
                "protoc --go_out=../go/build/gen --go-grpc_out=../go/build/gen *.proto; ")
 
 
+def install_cicada():
+    utils.call("cd /root; "
+               "git clone https://github.com/jl3953/cicada-engine; "
+               "cd cicada-engine; "
+               "mkdir -p build; cd build; "
+               "export PATH=$PATH:/root/.local; "
+               "cmake -DLTO=ON ..; "
+               "make -j; cp ../src/mica/test/*.json .; "
+               "../script/setup.sh 16384 16384; ")
+
+
 def main():
     # # utils.call("apt update")
     # # #utils.call("apt upgrade -y")
