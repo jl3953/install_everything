@@ -24,11 +24,8 @@ def install_cockroachdb_dependencies():
     utils.call(
         "echo 'deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8' | sudo tee /etc/apt/sources.list.d/bazel.list")
     utils.call("sudo apt update -y && sudo apt install bazel -y")
-    #utils.call("sudo apt update -y && sudo apt full-upgrade -y")
 
     utils.call("apt install cmake -y")
-
-#    utils.call("source /root/.bashrc")
 
 
 def clone_upstream_cockroach_repo():
@@ -65,10 +62,9 @@ def change_cockroach_vendor_origin():
 
 
 def install_cockroachdb():
-    #install_cockroachdb_dependencies()
-    #clone_upstream_cockroach_repo()
-    #clone_cockroach_repo()
-    #build_cockroach_from_scratch()
+    install_cockroachdb_dependencies()
+    clone_upstream_cockroach_repo()
+    clone_cockroach_repo()
     change_cockroach_vendor_origin()
     build_cockroach_from_scratch()
 
@@ -106,17 +102,16 @@ def install_grpc_go():
 
 
 def main():
-    #utils.call("apt update")
-    ##utils.call("apt upgrade -y")
-    #utils.call("apt install gnuplot-x11 -y")
-    #utils.call("apt install htop -y")
-    #utils.call("apt install feh -y")
-    ##setup_vimrc()
+    utils.call("apt update")
+    utils.call("apt install gnuplot-x11 -y")
+    utils.call("apt install htop -y")
+    utils.call("apt install feh -y")
+    setup_vimrc()
     
     install_cockroachdb()
 
     install_grpc()
-    install_grpc_go
+    install_grpc_go()
 
     return 0
 
