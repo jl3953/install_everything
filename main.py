@@ -65,7 +65,7 @@ def change_cockroach_vendor_origin():
 
 
 def install_cockroachdb():
-    install_cockroachdb_dependencies()
+    #install_cockroachdb_dependencies()
     clone_upstream_cockroach_repo()
     clone_cockroach_repo()
     build_cockroach_from_scratch()
@@ -106,12 +106,12 @@ def install_grpc_go():
 
 
 def main():
-    utils.call("apt update")
-    #utils.call("apt upgrade -y")
-    utils.call("apt install gnuplot-x11 -y")
-    utils.call("apt install htop -y")
-    utils.call("apt install feh -y")
-    #setup_vimrc()
+    #utils.call("apt update")
+    ##utils.call("apt upgrade -y")
+    #utils.call("apt install gnuplot-x11 -y")
+    #utils.call("apt install htop -y")
+    #utils.call("apt install feh -y")
+    ##setup_vimrc()
     
     install_cockroachdb()
 
