@@ -116,7 +116,10 @@ def install_smdbrpc_dependencies():
 def install_smdbrpc():
     utils.call("cd /root; "
                "git clone https://github.com/jl3953/smdbrpc; "
-               "cd smdbrpc/proto; "
+               "cd smdbrpc/protos; "
+               "export GO111MODULE=on  # Enable module mode; "
+               "go get google.golang.org/protobuf/cmd/protoc-gen-go \
+         google.golang.org/grpc/cmd/protoc-gen-go-grpc"
                "protoc --go_out=../go --go-grpc_out=../go *.proto; ")
 
 
