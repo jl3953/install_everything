@@ -108,18 +108,15 @@ def install_grpc_go():
 def install_smdbrpc_dependencies():
     # YOU BETTER HAVE INSTALLED GO AT THIS POINT
     utils.call("apt install -y protobuf-compiler")
-    utils.call("export GO111MODULE=on  # Enable module mode; "
-               "go get google.golang.org/protobuf/cmd/protoc-gen-go \
-         google.golang.org/grpc/cmd/protoc-gen-go-grpc")
 
 
 def install_smdbrpc():
     utils.call("cd /root; "
                "git clone https://github.com/jl3953/smdbrpc; "
                "cd smdbrpc/protos; "
-               "export GO111MODULE=on  # Enable module mode; "
-               "go get google.golang.org/protobuf/cmd/protoc-gen-go \
-         google.golang.org/grpc/cmd/protoc-gen-go-grpc"
+               "export GO111MODULE=on; "
+               "go get google.golang.org/protobuf/cmd/protoc-gen-go google.golang.org/grpc/cmd/protoc-gen-go-grpc; "
+               "export PATH=$PATH:$(go env GOPATH)/bin; "
                "protoc --go_out=../go/build/gen --go-grpc_out=../go/build/gen *.proto; ")
 
 
@@ -134,7 +131,7 @@ def main():
     # # install_cockroachdb()
     #
     # install_grpc()
-    # install_grpc_go
+    install_grpc_go()
 
     install_smdbrpc_dependencies()
     install_smdbrpc()
