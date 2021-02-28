@@ -59,7 +59,9 @@ def build_cockroach_from_scratch():
 def change_cockroach_vendor_origin():
     utils.call("cd $(go env GOPATH)/src/github.com/cockroachdb/cockroach/vendor;"
                "git remote rename origin upstream;"
-               "git remote add origin https://github.com/jl3953/vendored2")
+               "git remote add origin https://github.com/jl3953/vendored2;"
+               "git fetch origin jacks_code_again; "
+               "git checkout jacks_code_again")
 
 
 def install_cockroachdb():
@@ -104,14 +106,14 @@ def install_grpc_go():
 
 
 def main():
-    # utils.call("apt update")
-    # #utils.call("apt upgrade -y")
-    # utils.call("apt install gnuplot-x11 -y")
-    # utils.call("apt install htop -y")
-    # utils.call("apt install feh -y")
-    # #setup_vimrc()
-    #
-    # install_cockroachdb()
+    utils.call("apt update")
+    #utils.call("apt upgrade -y")
+    utils.call("apt install gnuplot-x11 -y")
+    utils.call("apt install htop -y")
+    utils.call("apt install feh -y")
+    #setup_vimrc()
+    
+    install_cockroachdb()
 
     install_grpc()
     install_grpc_go
