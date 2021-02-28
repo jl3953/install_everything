@@ -66,9 +66,9 @@ def change_cockroach_vendor_origin():
 
 def install_cockroachdb():
     #install_cockroachdb_dependencies()
-    clone_upstream_cockroach_repo()
-    clone_cockroach_repo()
-    build_cockroach_from_scratch()
+    #clone_upstream_cockroach_repo()
+    #clone_cockroach_repo()
+    #build_cockroach_from_scratch()
     change_cockroach_vendor_origin()
     build_cockroach_from_scratch()
 
