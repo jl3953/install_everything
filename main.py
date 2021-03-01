@@ -9,7 +9,7 @@ def install_cockroachdb_dependencies():
     # golang
     utils.call("wget https://golang.org/dl/go1.15.8.linux-amd64.tar.gz")
     utils.call("tar -C /usr/local -xzf go1.15.8.linux-amd64.tar.gz")
-    utils.call("echo 'export PATH=$PATH:/usr/local/go/bin' >> /root/.bashrc")
+    utils.call("echo 'export PATH=$PATH:/root/go/bin' >> /root/.bashrc")
 
     # install nodejs v12 and yarn
     utils.call("apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates")
@@ -24,7 +24,6 @@ def install_cockroachdb_dependencies():
     utils.call(
         "echo 'deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8' | sudo tee /etc/apt/sources.list.d/bazel.list")
     utils.call("sudo apt update -y && sudo apt install bazel -y")
-    # utils.call("sudo apt update -y && sudo apt full-upgrade -y")
 
     utils.call("apt install cmake -y")
 
@@ -132,20 +131,19 @@ def install_cicada():
 
 
 def main():
-    # # utils.call("apt update")
-    # # #utils.call("apt upgrade -y")
-    # # utils.call("apt install gnuplot-x11 -y")
-    # # utils.call("apt install htop -y")
-    # # utils.call("apt install feh -y")
-    # # #setup_vimrc()
-    # #
-    # # install_cockroachdb()
-    #
-    # install_grpc()
-    #install_grpc_go()
+    utils.call("apt update")
+    utils.call("apt install gnuplot-x11 -y")
+    utils.call("apt install htop -y")
+    utils.call("apt install feh -y")
+    setup_vimrc()
 
-    #install_smdbrpc_dependencies()
-    #install_smdbrpc()
+    install_cockroachdb()
+
+    install_grpc()
+    install_grpc_go()
+
+    install_smdbrpc_dependencies()
+    install_smdbrpc()
     install_cicada()
 
     return 0
