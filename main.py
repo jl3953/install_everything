@@ -28,9 +28,6 @@ def install_cockroachdb_dependencies():
     utils.call("apt install cmake -y")
 
 
-#    utils.call("source /root/.bashrc")
-
-
 def clone_upstream_cockroach_repo():
     # original cockroachdb
     utils.call("mkdir -p $(go env GOPATH)/src/github.com/cockroachdb")
@@ -67,7 +64,6 @@ def install_cockroachdb():
     install_cockroachdb_dependencies()
     clone_upstream_cockroach_repo()
     clone_cockroach_repo()
-    build_cockroach_from_scratch()
     change_cockroach_vendor_origin()
     build_cockroach_from_scratch()
 
@@ -136,7 +132,6 @@ def main():
     utils.call("apt install htop -y")
     utils.call("apt install feh -y")
     setup_vimrc()
-
     install_cockroachdb()
 
     install_grpc()
