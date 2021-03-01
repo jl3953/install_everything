@@ -142,10 +142,11 @@ def main():
     # # install_cockroachdb()
     #
     # install_grpc()
-    install_grpc_go()
+    #install_grpc_go()
 
-    install_smdbrpc_dependencies()
-    install_smdbrpc()
+    #install_smdbrpc_dependencies()
+    #install_smdbrpc()
+    install_cicada()
 
     return 0
 
