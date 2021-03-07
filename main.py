@@ -34,6 +34,7 @@ def clone_upstream_cockroach_repo():
     utils.call("cd /root/go/src/github.com/cockroachdb; "
                "git clone https://github.com/cockroachdb/cockroach; "
                "cd cockroach; "
+               "export PATH=$PATH:/root/go/bin:/usr/local/go/bin; "
                "git fetch origin staging-20.1.9; git checkout staging-20.1.9; "
                "git clean -fdx; make clean; make")
     utils.call("mv /root/go/src/github.com/cockroachdb/cockroach /root")
@@ -61,7 +62,7 @@ def change_cockroach_vendor_origin():
 
 
 def install_cockroachdb():
-    install_cockroachdb_dependencies()
+    #install_cockroachdb_dependencies()
     clone_upstream_cockroach_repo()
     clone_cockroach_repo()
     change_cockroach_vendor_origin()
@@ -127,10 +128,10 @@ def install_cicada():
 
 
 def main():
-    utils.call("apt update")
-    utils.call("apt install gnuplot-x11 -y")
-    utils.call("apt install htop -y")
-    utils.call("apt install feh -y")
+    #utils.call("apt update")
+    #utils.call("apt install gnuplot-x11 -y")
+    #utils.call("apt install htop -y")
+    #utils.call("apt install feh -y")
     #setup_vimrc()
     install_cockroachdb()
 
