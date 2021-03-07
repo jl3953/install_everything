@@ -128,19 +128,19 @@ def install_cicada():
 
 
 def main():
-    #utils.call("apt update")
-    #utils.call("apt install gnuplot-x11 -y")
-    #utils.call("apt install htop -y")
-    #utils.call("apt install feh -y")
-    #setup_vimrc()
+    utils.call("apt update")
+    utils.call("apt install gnuplot-x11 -y")
+    utils.call("apt install htop -y")
+    utils.call("apt install feh -y")
+    setup_vimrc()
     install_cockroachdb()
 
-    #install_grpc()
-    #install_grpc_go()
+    install_grpc()
+    install_grpc_go()
 
-    #install_smdbrpc_dependencies()
-    #install_smdbrpc()
-    #install_cicada()
+    install_smdbrpc_dependencies()
+    install_smdbrpc()
+    install_cicada()
 
     return 0
 
