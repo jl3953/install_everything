@@ -30,30 +30,30 @@ def install_cockroachdb_dependencies():
 
 def clone_upstream_cockroach_repo():
     # original cockroachdb
-    utils.call("mkdir -p $(go env GOPATH)/src/github.com/cockroachdb")
-    utils.call("cd $(go env GOPATH)/src/github.com/cockroachdb; "
+    utils.call("mkdir -p /root/go/src/github.com/cockroachdb")
+    utils.call("cd /root/go/src/github.com/cockroachdb; "
                "git clone https://github.com/cockroachdb/cockroach; "
                "cd cockroach; "
                "git fetch origin staging-20.1.9; git checkout staging-20.1.9; "
                "git clean -fdx; make clean; make")
-    utils.call("mv $(go env GOPATH)/src/github.com/cockroachdb/cockroach /root")
+    utils.call("mv /root/go/src/github.com/cockroachdb/cockroach /root")
 
 
 def clone_cockroach_repo():
-    # utils.call("mkdir -p $(go env GOPATH)/src/github.com/cockroachdb")
-    utils.call("cd $(go env GOPATH)/src/github.com/cockroachdb;"
+    # utils.call("mkdir -p /root/go/src/github.com/cockroachdb")
+    utils.call("cd /root/go/src/github.com/cockroachdb;"
                "git clone https://github.com/jl3953/cockroach3.0 cockroach")
 
 
 def build_cockroach_from_scratch():
-    utils.call("cd $(go env GOPATH)/src/github.com/cockroachdb/cockroach;"
+    utils.call("cd /root/go/src/github.com/cockroachdb/cockroach;"
                "git clean -fdx;"
                "make clean;"
                "make")
 
 
 def change_cockroach_vendor_origin():
-    utils.call("cd $(go env GOPATH)/src/github.com/cockroachdb/cockroach/vendor; "
+    utils.call("cd /root/go/src/github.com/cockroachdb/cockroach/vendor; "
                "git remote rename origin upstream; "
                "git remote add origin https://github.com/jl3953/vendored2; "
                "git fetch origin jacks_code_again; "
@@ -95,7 +95,7 @@ def install_grpc():
 def install_grpc_go():
     utils.call("export GO111MODULE=on; "
                "go get google.golang.org/protobuf/cmd/protoc-gen-go google.golang.org/grpc/cmd/protoc-gen-go-grpc; "
-               'export PATH="$PATH:$(go env GOPATH)/bin"')
+               'export PATH="$PATH:/root/go/bin"')
     utils.call("cd /root; "
                "git clone -b v1.35.0 https://github.com/grpc/grpc-go; ")
 
@@ -111,7 +111,7 @@ def install_smdbrpc():
                "cd smdbrpc/protos; "
                "export GO111MODULE=on; "
                "go get google.golang.org/protobuf/cmd/protoc-gen-go google.golang.org/grpc/cmd/protoc-gen-go-grpc; "
-               "export PATH=$PATH:$(go env GOPATH)/bin; "
+               "export PATH=$PATH:/root/go/bin; "
                "protoc --go_out=../go/build/gen --go-grpc_out=../go/build/gen *.proto; ")
 
 
@@ -131,15 +131,15 @@ def main():
     utils.call("apt install gnuplot-x11 -y")
     utils.call("apt install htop -y")
     utils.call("apt install feh -y")
-    setup_vimrc()
+    #setup_vimrc()
     install_cockroachdb()
 
-    install_grpc()
-    install_grpc_go()
+    #install_grpc()
+    #install_grpc_go()
 
-    install_smdbrpc_dependencies()
-    install_smdbrpc()
-    install_cicada()
+    #install_smdbrpc_dependencies()
+    #install_smdbrpc()
+    #install_cicada()
 
     return 0
 
