@@ -62,7 +62,7 @@ def change_cockroach_vendor_origin():
 
 
 def install_cockroachdb():
-    #install_cockroachdb_dependencies()
+    install_cockroachdb_dependencies()
     clone_upstream_cockroach_repo()
     clone_cockroach_repo()
     change_cockroach_vendor_origin()
@@ -135,12 +135,12 @@ def main():
     setup_vimrc()
     install_cockroachdb()
 
-    install_grpc()
-    install_grpc_go()
+    #install_grpc()
+    #install_grpc_go()
 
-    install_smdbrpc_dependencies()
-    install_smdbrpc()
-    install_cicada()
+    #install_smdbrpc_dependencies()
+    #install_smdbrpc()
+    #install_cicada()
 
     return 0
 
