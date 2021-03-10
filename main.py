@@ -42,14 +42,15 @@ def clone_upstream_cockroach_repo():
 
 def clone_cockroach_repo():
     # utils.call("mkdir -p /root/go/src/github.com/cockroachdb")
-    utils.call("cd /root/go/src/github.com/cockroachdb;"
-               "git clone https://github.com/jl3953/cockroach3.0 cockroach")
+    utils.call("cd /root/go/src/github.com/cockroachdb; "
+               "git clone --recurse-submodules https://github.com/jl3953/cockroach3.0 cockroach")
 
 
 def build_cockroach_from_scratch():
-    utils.call("cd /root/go/src/github.com/cockroachdb/cockroach;"
-               "git clean -fdx;"
-               "make clean;"
+    utils.call("cd /root/go/src/github.com/cockroachdb/cockroach; "
+               "export PATH=$PATH:/root/go/bin:/usr/local/go/bin; "
+               "git clean -fdx; "
+               "make clean; "
                "make")
 
 
@@ -62,9 +63,12 @@ def change_cockroach_vendor_origin():
 
 
 def install_cockroachdb():
-    install_cockroachdb_dependencies()
-    clone_upstream_cockroach_repo()
-    clone_cockroach_repo()
+    #install_cockroachdb_dependencies()
+    #clone_upstream_cockroach_repo()
+    try:
+        clone_cockroach_repo()
+    except BaseException:
+        print("we'll be fine")
     change_cockroach_vendor_origin()
     build_cockroach_from_scratch()
 
@@ -128,11 +132,11 @@ def install_cicada():
 
 
 def main():
-    utils.call("apt update")
-    utils.call("apt install gnuplot-x11 -y")
-    utils.call("apt install htop -y")
-    utils.call("apt install feh -y")
-    setup_vimrc()
+    #utils.call("apt update")
+    #utils.call("apt install gnuplot-x11 -y")
+    #utils.call("apt install htop -y")
+    #utils.call("apt install feh -y")
+    #setup_vimrc()
     install_cockroachdb()
 
     #install_grpc()
