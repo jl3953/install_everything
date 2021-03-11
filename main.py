@@ -9,7 +9,6 @@ def install_cockroachdb_dependencies():
     # golang
     utils.call("wget https://golang.org/dl/go1.15.8.linux-amd64.tar.gz")
     utils.call("tar -C /usr/local -xzf go1.15.8.linux-amd64.tar.gz")
-    utils.call("echo 'export PATH=$PATH:/root/go/bin' >> /root/.bashrc")
 
     # install nodejs v12 and yarn
     utils.call("apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates")
@@ -41,7 +40,7 @@ def clone_upstream_cockroach_repo():
 
 
 def clone_cockroach_repo():
-    # utils.call("mkdir -p /root/go/src/github.com/cockroachdb")
+    utils.call("mkdir -p /root/go/src/github.com/cockroachdb")
     utils.call("cd /root/go/src/github.com/cockroachdb; "
                "git clone --recurse-submodules https://github.com/jl3953/cockroach3.0 cockroach")
 
@@ -63,8 +62,8 @@ def change_cockroach_vendor_origin():
 
 
 def install_cockroachdb():
-    #install_cockroachdb_dependencies()
-    #clone_upstream_cockroach_repo()
+    install_cockroachdb_dependencies()
+    clone_upstream_cockroach_repo()
     try:
         clone_cockroach_repo()
     except BaseException:
@@ -86,7 +85,10 @@ def install_grpc():
     utils.call("cd /root; "
                "git clone --recurse-submodules -b v1.35.0 https://github.com/grpc/grpc")
     utils.call("/root/grpc/test/distrib/cpp/run_distrib_test_cmake.sh ")
-    utils.call("echo 'PATH=$PATH:/root/.local/bin' >> /root/.bashrc; ")
+
+
+def setup_bashrc():
+    utils.call("echo 'export PATH=$PATH:/root/.local/bin:/usr/local/go/bin/go/:/root/go/bin:/root/.local' >> /root/.bashrc")
 
 
 def install_grpc_go():
@@ -103,11 +105,11 @@ def install_smdbrpc_dependencies():
 
 def install_smdbrpc():
     utils.call("cd /root; "
-               #"git clone https://github.com/jl3953/smdbrpc; "
+               "git clone https://github.com/jl3953/smdbrpc; "
                "cd smdbrpc/protos; "
                "export GO111MODULE=on; "
-               "export PATH=$PATH:/root/go/bin:/usr/local/go/bin; "
-               "go get google.golang.org/protobuf/cmd/protoc-gen-go google.golang.org/grpc/cmd/protoc-gen-go-grpc; "
+               "export PATH=$PATH:/root/go/bin:/usr/local/go/bin:/root/.local/bin; "
+               "/usr/local/go/bin/go get google.golang.org/protobuf/cmd/protoc-gen-go google.golang.org/grpc/cmd/protoc-gen-go-grpc; "
                "protoc --go_out=../go/build/gen --go-grpc_out=../go/build/gen *.proto; ")
 
 
@@ -132,19 +134,21 @@ def install_cicada():
 
 
 def main():
-    #utils.call("apt update")
-    #utils.call("apt install gnuplot-x11 -y")
-    #utils.call("apt install htop -y")
-    #utils.call("apt install feh -y")
-    #setup_vimrc()
-    #install_cockroachdb()
+    utils.call("apt update")
+    utils.call("apt install gnuplot-x11 -y")
+    utils.call("apt install htop -y")
+    utils.call("apt install feh -y")
+    setup_vimrc()
+    install_cockroachdb()
 
-    #install_grpc()
-    #install_grpc_go()
+    install_grpc()
+    install_grpc_go()
 
-    #install_smdbrpc_dependencies()
+    install_smdbrpc_dependencies()
     install_smdbrpc()
-    #install_cicada()
+    install_cicada_dependencies()
+    install_cicada()
+    setup_bashrc()
 
     return 0
 
