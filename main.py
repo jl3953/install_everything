@@ -85,22 +85,14 @@ def install_grpc():
     utils.call("apt install -y build-essential autoconf libtool pkg-config")
     utils.call("cd /root; "
                "git clone --recurse-submodules -b v1.35.0 https://github.com/grpc/grpc")
-    utils.call("export MY_INSTALL_DIR=/root/.local; "
-               'export PATH="$PATH:$MY_INSTALL_DIR/bin"; '
-               "cd /root/grpc; "
-               "mkdir -p cmake/build; pushd cmake/build; "
-               "cmake -DgRPC_INSTALL=ON -DgRPC_BUILD_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$MY_INSTALL_DIR ../..; "
-               "make -j; "
-               "make install")
-    utils.call("export MY_INSTALL_DIR=/root/.local; "
-               'export PATH="$PATH:$MY_INSTALL_DIR/bin"; '
-               "echo 'PATH=$PATH:$MY_INSTALL_DIR/bin' >> /root/.bashrc; ")
+    utils.call("/root/grpc/test/distrib/cpp/run_distrib_test_cmake.sh ")
+    utils.call("echo 'PATH=$PATH:/root/.local/bin' >> /root/.bashrc; ")
 
 
 def install_grpc_go():
     utils.call("export GO111MODULE=on; "
                "go get google.golang.org/protobuf/cmd/protoc-gen-go google.golang.org/grpc/cmd/protoc-gen-go-grpc; "
-               'export PATH="$PATH:/root/go/bin"')
+               "export PATH=$PATH:/root/go/bin:/usr/local/go/bin; ")
     utils.call("cd /root; "
                "git clone -b v1.35.0 https://github.com/grpc/grpc-go; ")
 
@@ -109,15 +101,23 @@ def install_smdbrpc_dependencies():
     # YOU BETTER HAVE INSTALLED GO AT THIS POINT
     utils.call("apt install -y protobuf-compiler")
 
-
 def install_smdbrpc():
     utils.call("cd /root; "
-               "git clone https://github.com/jl3953/smdbrpc; "
+               #"git clone https://github.com/jl3953/smdbrpc; "
                "cd smdbrpc/protos; "
                "export GO111MODULE=on; "
+               "export PATH=$PATH:/root/go/bin:/usr/local/go/bin; "
                "go get google.golang.org/protobuf/cmd/protoc-gen-go google.golang.org/grpc/cmd/protoc-gen-go-grpc; "
-               "export PATH=$PATH:/root/go/bin; "
                "protoc --go_out=../go/build/gen --go-grpc_out=../go/build/gen *.proto; ")
+
+
+def install_cicada_dependencies():
+    utils.call("apt update")
+    utils.call("apt install -y software-properties-common")
+    utils.call("add-apt-repository -y ppa:ubuntu-toolchain-r/test")
+    utils.call("apt update")
+
+    utils.call("apt-get install -y build-essential cmake git libjemalloc-dev libnuma-dev")
 
 
 def install_cicada():
@@ -125,8 +125,8 @@ def install_cicada():
                "git clone https://github.com/jl3953/cicada-engine; "
                "cd cicada-engine; "
                "mkdir -p build; cd build; "
-               "export PATH=$PATH:/root/.local; "
-               "cmake -DLTO=ON ..; "
+               "export PATH=$PATH:/root/.local:/root/.local/bin; "
+               "cmake -DLTO=ON -DDEBUG=OFF ..; "
                "make -j; cp ../src/mica/test/*.json .; "
                "../script/setup.sh 16384 16384; ")
 
@@ -137,13 +137,13 @@ def main():
     #utils.call("apt install htop -y")
     #utils.call("apt install feh -y")
     #setup_vimrc()
-    install_cockroachdb()
+    #install_cockroachdb()
 
     #install_grpc()
     #install_grpc_go()
 
     #install_smdbrpc_dependencies()
-    #install_smdbrpc()
+    install_smdbrpc()
     #install_cicada()
 
     return 0
