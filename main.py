@@ -88,7 +88,7 @@ def install_grpc():
 
 
 def setup_bashrc():
-    utils.call("echo 'export PATH=$PATH:/root/.local/bin:/usr/local/go/bin/go/:/root/go/bin:/root/.local' >> /root/.bashrc")
+    utils.call("echo 'export PATH=$PATH:/root/.local/bin:/usr/local/go/bin:/root/go/bin:/root/.local' >> /root/.bashrc")
 
 
 def install_grpc_go():
@@ -149,6 +149,8 @@ def main():
     install_cicada_dependencies()
     install_cicada()
     setup_bashrc()
+
+    utils.call("rm -rf /root/cockroach")
 
     return 0
 
