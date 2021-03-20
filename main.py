@@ -141,13 +141,13 @@ def main():
     setup_vimrc()
     install_cockroachdb()
 
-    install_grpc()
-    install_grpc_go()
+    #install_grpc()
+    #install_grpc_go()
 
-    install_smdbrpc_dependencies()
-    install_smdbrpc()
-    install_cicada_dependencies()
-    install_cicada()
+    #install_smdbrpc_dependencies()
+    #install_smdbrpc()
+    #install_cicada_dependencies()
+    #install_cicada()
     setup_bashrc()
 
     utils.call("rm -rf /root/cockroach")
