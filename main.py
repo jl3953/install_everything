@@ -63,7 +63,7 @@ def change_cockroach_vendor_origin():
 
 def install_cockroachdb():
     install_cockroachdb_dependencies()
-    clone_upstream_cockroach_repo()
+    # clone_upstream_cockroach_repo()
     try:
         clone_cockroach_repo()
     except BaseException:
@@ -135,10 +135,10 @@ def install_cicada():
 
 def main():
     utils.call("apt update")
-    utils.call("apt install gnuplot-x11 -y")
-    utils.call("apt install htop -y")
-    utils.call("apt install feh -y")
-    setup_vimrc()
+    # utils.call("apt install gnuplot-x11 -y")
+    # utils.call("apt install htop -y")
+    # utils.call("apt install feh -y")
+    # setup_vimrc()
     install_cockroachdb()
 
     #install_grpc()
