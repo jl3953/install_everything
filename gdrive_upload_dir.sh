@@ -1,12 +1,16 @@
 #!/usr/bin/bash
 
-thermopylaelogsId=$(gdrive list | grep thermopylaelogs | grep -Eo '^[^ ]+')
+source /usr/local/bin/gdrive_upload_file
 
-fileId=$(gdrive list | grep $1 | grep -Eo '^[^ ]+')
-if [ $? -ne 0 ]
+set -x
+
+fileId=$(get_fileid $1)
+if [[ $fileId == "" ]];
 then
 	gdrive mkdir --parent $thermopylaelogsId $1
-	fileId=$(gdrive list | grep $1 | grep -Eo '^[^ ]+')
+    fileId=$(get_fileid $1)
 fi
 
 gdrive sync upload --keep-local --delete-extraneous $1 $fileId
+
+set +x
