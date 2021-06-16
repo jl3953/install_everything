@@ -1,6 +1,8 @@
 import sys
 import utils
 
+import install_gdrive
+
 
 def install_cockroachdb_dependencies():
     # libncurses-dev
@@ -134,6 +136,9 @@ def install_cicada():
 
 
 def main():
+
+    install_gdrive.install_gdrive()
+
     utils.call("apt update")
     utils.call("apt install gnuplot-x11 -y")
     utils.call("apt install htop -y")
@@ -151,6 +156,7 @@ def main():
     setup_bashrc()
 
     utils.call("rm -rf /root/cockroach")
+
 
     return 0
 
