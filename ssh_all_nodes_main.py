@@ -19,6 +19,7 @@ def main():
     args = parser.parse_args()
 
     clone_cmd = ("git clone https://github.com/jl3953/install_everything /root/install_everything")
+    pull_cmd = ("cd /root/install_everything; git pull origin master")
     run_cmd =("python3 /root/install_everything/main.py")
 
     processes = []
@@ -35,6 +36,7 @@ def main():
             utils.call_remote(host, clone_cmd)
         except BaseException:
             print("install_everything repo already exists on {}".format(host))
+            utils.call_remote(host, pull_cmd)
 
         # run install_everything
         cmd = ("ssh {0} '{1}'".format(host, run_cmd))
