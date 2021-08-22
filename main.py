@@ -104,6 +104,10 @@ def install_grpc_go():
 def install_smdbrpc_dependencies():
     # YOU BETTER HAVE INSTALLED GO AT THIS POINT
     utils.call("apt install -y protobuf-compiler")
+	utils.call("apt install python3-pip")
+	utils.call("python3 -m pip install grpcio")
+	utils.call("python3 -m pip install grpcio-tools")
+
 
 def install_smdbrpc():
     utils.call("cd /root; "
