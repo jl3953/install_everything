@@ -145,8 +145,8 @@ def main():
 
     #utils.call("apt update")
     #utils.call("apt install gnuplot-x11 -y")
-    utils.call("apt install htop -y")
-    utils.call("apt install feh -y")
+    #utils.call("apt install htop -y")
+    #utils.call("apt install feh -y")
     setup_vimrc()
     install_cockroachdb()
 
