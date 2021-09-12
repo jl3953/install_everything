@@ -104,9 +104,9 @@ def install_grpc_go():
 def install_smdbrpc_dependencies():
     # YOU BETTER HAVE INSTALLED GO AT THIS POINT
     utils.call("apt install -y protobuf-compiler")
-	utils.call("apt install python3-pip")
-	utils.call("python3 -m pip install grpcio")
-	utils.call("python3 -m pip install grpcio-tools")
+    utils.call("apt install python3-pip")
+    utils.call("python3 -m pip install grpcio")
+    utils.call("python3 -m pip install grpcio-tools")
 
 
 def install_smdbrpc():
@@ -143,8 +143,8 @@ def main():
 
     install_gdrive.install_gdrive()
 
-    utils.call("apt update")
-    utils.call("apt install gnuplot-x11 -y")
+    #utils.call("apt update")
+    #utils.call("apt install gnuplot-x11 -y")
     utils.call("apt install htop -y")
     utils.call("apt install feh -y")
     setup_vimrc()
