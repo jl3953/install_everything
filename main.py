@@ -65,12 +65,12 @@ def change_cockroach_vendor_origin():
 
 def install_cockroachdb():
     install_cockroachdb_dependencies()
-    clone_upstream_cockroach_repo()
+    # clone_upstream_cockroach_repo()
     try:
         clone_cockroach_repo()
     except BaseException:
         print("we'll be fine")
-    change_cockroach_vendor_origin()
+    # change_cockroach_vendor_origin()
     build_cockroach_from_scratch()
 
 
