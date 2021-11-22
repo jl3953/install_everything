@@ -112,11 +112,12 @@ def install_smdbrpc_dependencies():
 def install_smdbrpc():
     utils.call("cd /root; "
                "git clone https://github.com/jl3953/smdbrpc; "
-               "cd smdbrpc/protos; "
+               "cd smdbrpc/protos; git fetch origin demotehotkeys; git checkout demotehotkeys; "
                "export GO111MODULE=on; "
                "export PATH=$PATH:/root/go/bin:/usr/local/go/bin:/root/.local/bin; "
                "/usr/local/go/bin/go get google.golang.org/protobuf/cmd/protoc-gen-go google.golang.org/grpc/cmd/protoc-gen-go-grpc; "
-               "protoc --go_out=../go/build/gen --go-grpc_out=../go/build/gen *.proto; ")
+               "protoc --go_out=../go/build/gen --go-grpc_out=../go/build/gen *.proto; "
+			   "cd /root/smdbrpc; ./generate_new_protos.sh; ")
 
 
 def install_cicada_dependencies():
@@ -153,8 +154,8 @@ def main():
     install_grpc()
     install_grpc_go()
 
-    #install_smdbrpc_dependencies()
-    #install_smdbrpc()
+    install_smdbrpc_dependencies()
+    install_smdbrpc()
     install_cicada_dependencies()
     install_cicada()
     setup_bashrc()
