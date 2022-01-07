@@ -155,12 +155,12 @@ def main():
     install_grpc_go()
 
     install_smdbrpc_dependencies()
-    install_smdbrpc()
+    #install_smdbrpc()
     install_cicada_dependencies()
-    install_cicada()
+    #install_cicada()
     setup_bashrc()
 
-    utils.call("rm -rf /root/cockroach")
+    #utils.call("rm -rf /root/cockroach")
 
 
     return 0
