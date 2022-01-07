@@ -6,7 +6,8 @@ import utils
 
 
 def install_gdrive():
-    utils.call("wget --output-document=/root/gdrive https://docs.google.com/uc?id=0B3X9GlR6EmbnWksyTEtCM0VfaFE&export=download")
+    utils.call("wget --output-document=/root/gdrive.tar.gz https://github.com/prasmussen/gdrive/releases/download/2.1.1/gdrive_2.1.1_linux_386.tar.gz")
+    utils.call("cd /root; gunzip gdrive.tar.gz; tar -xvf gdrive.tar;")
     utils.call("chmod +x /root/gdrive")
     utils.call("cd /root/install_everything; git pull origin master")
     utils.call("install /root/gdrive /usr/local/bin/gdrive")
