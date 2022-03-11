@@ -1,3 +1,4 @@
+import argparse
 import sys
 import utils
 
@@ -13,17 +14,27 @@ def install_cockroachdb_dependencies():
     utils.call("tar -C /usr/local -xzf go1.15.8.linux-amd64.tar.gz")
 
     # install nodejs v12 and yarn
-    utils.call("apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates")
-    utils.call("curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -")
+    utils.call(
+        "apt -y install curl dirmngr apt-transport-https lsb-release "
+        "ca-certificates"
+    )
+    utils.call(
+        "curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -"
+    )
     utils.call("apt -y install nodejs")
     utils.call("npm install --global yarn")
 
     # install bazel
     utils.call("apt install curl gnupg -y")
-    utils.call("curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg")
+    utils.call(
+        "curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor "
+        "> bazel.gpg"
+    )
     utils.call("mv bazel.gpg /etc/apt/trusted.gpg.d/")
     utils.call(
-        "echo 'deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8' | sudo tee /etc/apt/sources.list.d/bazel.list")
+        "echo 'deb [arch=amd64] https://storage.googleapis.com/bazel-apt "
+        "stable jdk1.8' | sudo tee /etc/apt/sources.list.d/bazel.list"
+    )
     utils.call("sudo apt update -y && sudo apt install bazel -y")
 
     utils.call("apt install cmake -y")
@@ -32,35 +43,44 @@ def install_cockroachdb_dependencies():
 def clone_upstream_cockroach_repo():
     # original cockroachdb
     utils.call("mkdir -p /root/go/src/github.com/cockroachdb")
-    utils.call("cd /root/go/src/github.com/cockroachdb; "
-               "git clone https://github.com/cockroachdb/cockroach; "
-               "cd cockroach; "
-               "export PATH=$PATH:/root/go/bin:/usr/local/go/bin; "
-               "git fetch origin staging-20.1.9; git checkout staging-20.1.9; "
-               "git clean -fdx; make clean; make")
+    utils.call(
+        "cd /root/go/src/github.com/cockroachdb; "
+        "git clone https://github.com/cockroachdb/cockroach; "
+        "cd cockroach; "
+        "export PATH=$PATH:/root/go/bin:/usr/local/go/bin; "
+        "git fetch origin staging-20.1.9; git checkout staging-20.1.9; "
+        "git clean -fdx; make clean; make"
+    )
     utils.call("mv /root/go/src/github.com/cockroachdb/cockroach /root")
 
 
 def clone_cockroach_repo():
     utils.call("mkdir -p /root/go/src/github.com/cockroachdb")
-    utils.call("cd /root/go/src/github.com/cockroachdb; "
-               "git clone --recurse-submodules https://github.com/jl3953/cockroach3.0 cockroach")
+    utils.call(
+        "cd /root/go/src/github.com/cockroachdb; "
+        "git clone --recurse-submodules "
+        "https://github.com/jl3953/cockroach3.0 cockroach"
+    )
 
 
 def build_cockroach_from_scratch():
-    utils.call("cd /root/go/src/github.com/cockroachdb/cockroach; "
-               "export PATH=$PATH:/root/go/bin:/usr/local/go/bin; "
-               "git clean -fdx; "
-               "make clean; "
-               "make")
+    utils.call(
+        "cd /root/go/src/github.com/cockroachdb/cockroach; "
+        "export PATH=$PATH:/root/go/bin:/usr/local/go/bin; "
+        "git clean -fdx; "
+        "make clean; "
+        "make"
+    )
 
 
 def change_cockroach_vendor_origin():
-    utils.call("cd /root/go/src/github.com/cockroachdb/cockroach/vendor; "
-               "git remote rename origin upstream; "
-               "git remote add origin https://github.com/jl3953/vendored2; "
-               "git fetch origin jacks_code_again; "
-               "git checkout jacks_code_again; ")
+    utils.call(
+        "cd /root/go/src/github.com/cockroachdb/cockroach/vendor; "
+        "git remote rename origin upstream; "
+        "git remote add origin https://github.com/jl3953/vendored2; "
+        "git fetch origin jacks_code_again; "
+        "git checkout jacks_code_again; "
+    )
 
 
 def install_cockroachdb():
@@ -81,24 +101,36 @@ def setup_vimrc():
 
 
 def install_grpc():
-    utils.call("export MY_INSTALL_DIR=/root/.local; "
-               "mkdir -p $MY_INSTALL_DIR")
+    utils.call(
+        "export MY_INSTALL_DIR=/root/.local; "
+        "mkdir -p $MY_INSTALL_DIR"
+    )
     utils.call("apt install -y build-essential autoconf libtool pkg-config")
-    utils.call("cd /root; "
-               "git clone --recurse-submodules -b v1.35.0 https://github.com/grpc/grpc")
+    utils.call(
+        "cd /root; "
+        "git clone --recurse-submodules -b v1.35.0 https://github.com/grpc/grpc"
+    )
     utils.call("/root/grpc/test/distrib/cpp/run_distrib_test_cmake.sh ")
 
 
 def setup_bashrc():
-    utils.call("echo 'export PATH=$PATH:/root/.local/bin:/usr/local/go/bin:/root/go/bin:/root/.local' >> /root/.bashrc")
+    utils.call(
+        "echo 'export PATH=$PATH:/root/.local/bin:/usr/local/go/bin:/root/go"
+        "/bin:/root/.local' >> /root/.bashrc"
+    )
 
 
 def install_grpc_go():
-    utils.call("export GO111MODULE=on; "
-               "go get google.golang.org/protobuf/cmd/protoc-gen-go google.golang.org/grpc/cmd/protoc-gen-go-grpc; "
-               "export PATH=$PATH:/root/go/bin:/usr/local/go/bin; ")
-    utils.call("cd /root; "
-               "git clone -b v1.35.0 https://github.com/grpc/grpc-go; ")
+    utils.call(
+        "export GO111MODULE=on; "
+        "go get google.golang.org/protobuf/cmd/protoc-gen-go "
+        "google.golang.org/grpc/cmd/protoc-gen-go-grpc; "
+        "export PATH=$PATH:/root/go/bin:/usr/local/go/bin; "
+    )
+    utils.call(
+        "cd /root; "
+        "git clone -b v1.35.0 https://github.com/grpc/grpc-go; "
+    )
 
 
 def install_smdbrpc_dependencies():
@@ -110,14 +142,20 @@ def install_smdbrpc_dependencies():
 
 
 def install_smdbrpc():
-    utils.call("cd /root; "
-               "git clone https://github.com/jl3953/smdbrpc; "
-               "cd smdbrpc/protos; git fetch origin demotehotkeys; git checkout demotehotkeys; "
-               "export GO111MODULE=on; "
-               "export PATH=$PATH:/root/go/bin:/usr/local/go/bin:/root/.local/bin; "
-               "/usr/local/go/bin/go get google.golang.org/protobuf/cmd/protoc-gen-go google.golang.org/grpc/cmd/protoc-gen-go-grpc; "
-               "protoc --go_out=../go/build/gen --go-grpc_out=../go/build/gen *.proto; "
-			   "cd /root/smdbrpc; ./generate_new_protos.sh; ")
+    utils.call(
+        "cd /root; "
+        "git clone https://github.com/jl3953/smdbrpc; "
+        "cd smdbrpc/protos; git fetch origin demotehotkeys; git checkout "
+        "demotehotkeys; "
+        "export GO111MODULE=on; "
+        "export PATH=$PATH:/root/go/bin:/usr/local/go/bin:/root/.local/bin; "
+        "/usr/local/go/bin/go get "
+        "google.golang.org/protobuf/cmd/protoc-gen-go "
+        "google.golang.org/grpc/cmd/protoc-gen-go-grpc; "
+        "protoc --go_out=../go/build/gen --go-grpc_out=../go/build/gen "
+        "*.proto; "
+        "cd /root/smdbrpc; ./generate_new_protos.sh; "
+    )
 
 
 def install_cicada_dependencies():
@@ -126,21 +164,36 @@ def install_cicada_dependencies():
     utils.call("add-apt-repository -y ppa:ubuntu-toolchain-r/test")
     utils.call("apt update")
 
-    utils.call("apt-get install -y build-essential cmake git libjemalloc-dev libnuma-dev")
+    utils.call(
+        "apt-get install -y build-essential cmake git libjemalloc-dev "
+        "libnuma-dev"
+    )
 
 
 def install_cicada():
-    utils.call("cd /root; "
-               "git clone https://github.com/jl3953/cicada-engine; "
-               "cd cicada-engine; "
-               "mkdir -p build; cd build; "
-               "export PATH=$PATH:/root/.local:/root/.local/bin; "
-               "cmake -DLTO=ON -DDEBUG=OFF ..; "
-               "make -j; cp ../src/mica/test/*.json .; "
-               "../script/setup.sh 16384 16384; ")
+    utils.call(
+        "cd /root; "
+        "git clone https://github.com/jl3953/cicada-engine; "
+        "cd cicada-engine; "
+        "mkdir -p build; cd build; "
+        "export PATH=$PATH:/root/.local:/root/.local/bin; "
+        "cmake -DLTO=ON -DDEBUG=OFF ..; "
+        "make -j; cp ../src/mica/test/*.json .; "
+        "../script/setup.sh 16384 16384; "
+    )
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--smdbrpc", default=False, action="store_true",
+        help="install smdbrpc or not"
+    )
+    parser.add_argument(
+        "--cicada", default=False, action="store_true",
+        help="install Cicada or not"
+    )
+    args = parser.parse_args()
 
     install_gdrive.install_gdrive()
 
@@ -155,13 +208,14 @@ def main():
     install_grpc_go()
 
     install_smdbrpc_dependencies()
-    #install_smdbrpc()
+    if args.smdbrpc:
+        print("install smdbrpc")
+        install_smdbrpc()
     install_cicada_dependencies()
-    #install_cicada()
+    if args.cicada:
+        print("install cicada")
+        install_cicada()
     setup_bashrc()
-
-    #utils.call("rm -rf /root/cockroach")
-
 
     return 0
 

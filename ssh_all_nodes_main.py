@@ -7,9 +7,8 @@ import utils
 
 
 def install_everything():
-
     cmd = ("git clone https://github.com/jl3953/install_everything /root/"
-    "; python3 /root/install_everything/main.py")
+           "; python3 /root/install_everything/main.py")
     return subprocess.Popen(shlex.split(cmd))
 
 
@@ -18,9 +17,10 @@ def main():
     parser.add_argument("num_nodes", type=int, help="number of nodes")
     args = parser.parse_args()
 
-    clone_cmd = ("git clone https://github.com/jl3953/install_everything /root/install_everything")
-    pull_cmd = ("cd /root/install_everything; git pull origin master")
-    run_cmd =("python3 /root/install_everything/main.py")
+    clone_cmd = ("git clone https://github.com/jl3953/install_everything "
+                 "/root/install_everything")
+    pull_cmd = "cd /root/install_everything && git pull origin master "
+    run_cmd = "python3 /root/install_everything/main.py "
 
     processes = []
     for i in range(args.num_nodes):
@@ -39,7 +39,14 @@ def main():
             utils.call_remote(host, pull_cmd)
 
         # run install_everything
-        cmd = ("ssh {0} '{1}'".format(host, run_cmd))
+        cmd = "ssh {0} '{1}'".format(host, run_cmd)
+        if i == 0:
+            driver_node_run_cmd = "{0} --smdbrpc".format(run_cmd)
+            cmd = "ssh {0} '{1}'".format(host, driver_node_run_cmd)
+        elif i == 11:
+            cicada_node_run_cmd = "{0} --cicada".format(run_cmd)
+            cmd = "ssh {0} '{1}'".format(host, cicada_node_run_cmd)
+        print(cmd)
         processes.append(subprocess.Popen(shlex.split(cmd)))
 
     # wait for processes to finish
@@ -50,4 +57,4 @@ def main():
 
 
 if __name__ == "__main__":
-   sys.exit(main()) 
+    sys.exit(main())
