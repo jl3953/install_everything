@@ -183,11 +183,23 @@ def install_cicada():
     )
 
 
+def clone_test_scripts():
+    utils.call(
+        "cd /root"
+        " && git clone https://github.com/jl3953/thermopylae_tests_scripts"
+        " && git clone https://github.com/jl3953/thermopylae_graphs"
+    )
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--smdbrpc", default=False, action="store_true",
         help="install smdbrpc or not"
+    )
+    parser.add_argument(
+        "--clone_test_scripts", default=False, action="store_true",
+        help="clones test scripts or not"
     )
     parser.add_argument(
         "--cicada", default=False, action="store_true",
@@ -211,6 +223,9 @@ def main():
     if args.smdbrpc:
         print("install smdbrpc")
         install_smdbrpc()
+    if args.clone_test_scripts:
+        print("clone test scripts")
+        clone_test_scripts()
     install_cicada_dependencies()
     if args.cicada:
         print("install cicada")

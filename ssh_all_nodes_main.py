@@ -41,7 +41,8 @@ def main():
         # run install_everything
         cmd = "ssh {0} '{1}'".format(host, run_cmd)
         if i == 0:
-            driver_node_run_cmd = "{0} --smdbrpc".format(run_cmd)
+            driver_node_run_cmd = "{0} --smdbrpc --clone_test_scripts".format(
+                run_cmd)
             cmd = "ssh {0} '{1}'".format(host, driver_node_run_cmd)
         elif i == 11:
             cicada_node_run_cmd = "{0} --cicada".format(run_cmd)
