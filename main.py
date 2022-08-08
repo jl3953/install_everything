@@ -135,10 +135,10 @@ def install_grpc_go():
 
 def install_smdbrpc_dependencies():
     # YOU BETTER HAVE INSTALLED GO AT THIS POINT
-    #utils.call("apt install -y protobuf-compiler")
-    #utils.call("apt install python3-pip")
-    #utils.call("python3 -m pip install grpcio")
-    #utils.call("python3 -m pip install grpcio-tools")
+    utils.call("apt install -y protobuf-compiler")
+    utils.call("apt install python3-pip")
+    utils.call("python3 -m pip install grpcio")
+    utils.call("python3 -m pip install grpcio-tools")
     utils.call("apt-get install libpq-dev")
     utils.call("python3 -m pip install psycopg2")
 
@@ -209,17 +209,17 @@ def main():
     )
     args = parser.parse_args()
 
-    #install_gdrive.install_gdrive()
+    install_gdrive.install_gdrive()
 
-    #utils.call("apt update")
-    #utils.call("apt install gnuplot-x11 -y")
-    #utils.call("apt install htop -y")
-    #utils.call("apt install feh -y")
-    #setup_vimrc()
-    #install_cockroachdb()
+    utils.call("apt update")
+    utils.call("apt install gnuplot-x11 -y")
+    utils.call("apt install htop -y")
+    utils.call("apt install feh -y")
+    setup_vimrc()
+    install_cockroachdb()
 
-    #install_grpc()
-    #install_grpc_go()
+    install_grpc()
+    install_grpc_go()
 
     install_smdbrpc_dependencies()
     if args.smdbrpc:
