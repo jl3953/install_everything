@@ -209,17 +209,17 @@ def main():
     )
     args = parser.parse_args()
 
-    install_gdrive.install_gdrive()
+    #install_gdrive.install_gdrive()
 
-    utils.call("apt update")
-    utils.call("apt install gnuplot-x11 -y")
-    utils.call("apt install htop -y")
-    utils.call("apt install feh -y")
-    setup_vimrc()
-    install_cockroachdb()
+    #utils.call("apt update")
+    #utils.call("apt install gnuplot-x11 -y")
+    #utils.call("apt install htop -y")
+    #utils.call("apt install feh -y")
+    #setup_vimrc()
+    #install_cockroachdb()
 
-    install_grpc()
-    install_grpc_go()
+    #install_grpc()
+    #install_grpc_go()
 
     install_smdbrpc_dependencies()
     if args.smdbrpc:
