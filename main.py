@@ -5,7 +5,7 @@ import utils
 import install_gdrive
 
 
-def install_cockroachdb_dependencies(): 
+def install_cockroachdb_dependencies():
     # libncurses-dev
     utils.call("apt install libncurses5-dev -y")
 
