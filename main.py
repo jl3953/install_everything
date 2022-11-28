@@ -209,8 +209,6 @@ def main():
     )
     args = parser.parse_args()
 
-    install_gdrive.install_gdrive()
-
     utils.call("apt update")
     utils.call("apt install htop -y")
     if args.clone_test_scripts:
@@ -238,6 +236,7 @@ def main():
 
     if not args.cicada:
         utils.call("rm -rf /root/grpc")
+        utils.call("rm -rf *tar.gz")
 
 
     return 0
