@@ -44,7 +44,7 @@ def main():
             driver_node_run_cmd = "{0} --smdbrpc --clone_test_scripts".format(
                 run_cmd)
             cmd = "ssh {0} '{1}'".format(host, driver_node_run_cmd)
-        elif i == args.num_nodes - 1:
+        elif i in [11, 12, 13]:
             cicada_node_run_cmd = "{0} --cicada".format(run_cmd)
             cmd = "ssh {0} '{1}'".format(host, cicada_node_run_cmd)
         print(cmd)

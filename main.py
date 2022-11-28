@@ -212,9 +212,11 @@ def main():
     install_gdrive.install_gdrive()
 
     utils.call("apt update")
-    utils.call("apt install gnuplot-x11 -y")
     utils.call("apt install htop -y")
-    utils.call("apt install feh -y")
+    if args.clone_test_scripts:
+        utils.call("apt install gnuplot-x11 -y")
+        utils.call("apt install feh -y")
+
     setup_vimrc()
     install_cockroachdb()
 
@@ -233,6 +235,10 @@ def main():
         print("install cicada")
         install_cicada()
     setup_bashrc()
+
+    if not args.cicada:
+        utils.call("rm -rf /root/grpc")
+
 
     return 0
 
