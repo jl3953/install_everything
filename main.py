@@ -1,8 +1,7 @@
 import argparse
+import os.path
 import sys
 import utils
-
-import install_gdrive
 
 
 def install_cockroachdb_dependencies():
@@ -193,6 +192,21 @@ def clone_test_scripts():
     )
 
 
+def copy_import_files(start, end, local_data):
+    for i in range(start, end):
+        utils.call(
+            "cp /mydata/populate1B._{0}.csv.gz {1}".format(i, local_data))
+
+
+def copy_snapshot(snapshot_name, local_data):
+    snapshot_dir = os.path.join(local_data, "snapshots")
+    if not os.path.exists(snapshot_dir):
+        os.makedirs(snapshot_dir)
+
+    utils.call(
+        "cp /mydata/snapshots/{0} {1}/{0}".format(snapshot_name, snapshot_dir))
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -238,6 +252,11 @@ def main():
         utils.call("rm -rf /root/grpc")
         utils.call("rm -rf *tar.gz")
 
+        # copy over import files
+        copy_import_files(150, 176, "/data")
+        copy_import_files(350, 376, "/data")
+        copy_snapshot("150M", "/data")
+        copy_snapshot("350M", "/data")
 
     return 0
 
