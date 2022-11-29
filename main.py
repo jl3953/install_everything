@@ -204,7 +204,7 @@ def copy_snapshot(snapshot_name, local_data):
         os.makedirs(snapshot_dir)
 
     utils.call(
-        "cp /mydata/snapshots/{0} {1}/{0}".format(snapshot_name, snapshot_dir))
+        "cp -r /mydata/snapshots/{0} {1}/{0}".format(snapshot_name, snapshot_dir))
 
 
 def main():
