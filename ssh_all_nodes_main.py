@@ -7,8 +7,9 @@ import utils
 
 
 def install_everything():
-    cmd = ("git clone https://github.com/jl3953/install_everything /root/"
-           "; python3 /root/install_everything/main.py")
+    # cmd = ("git clone https://github.com/jl3953/install_everything /root/"
+    #        "; python3 /root/install_everything/main.py")
+    cmd = "python3 /root/install_everything/main.py"
     return subprocess.Popen(shlex.split(cmd))
 
 
