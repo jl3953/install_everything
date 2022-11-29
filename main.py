@@ -223,30 +223,30 @@ def main():
     )
     args = parser.parse_args()
 
-    utils.call("apt update")
-    utils.call("apt install htop -y")
-    if args.clone_test_scripts:
-        utils.call("apt install gnuplot-x11 -y")
-        utils.call("apt install feh -y")
-
-    setup_vimrc()
-    install_cockroachdb()
-
-    install_grpc()
-    install_grpc_go()
-
-    install_smdbrpc_dependencies()
-    if args.smdbrpc:
-        print("install smdbrpc")
-        install_smdbrpc()
-    if args.clone_test_scripts:
-        print("clone test scripts")
-        clone_test_scripts()
-    install_cicada_dependencies()
-    if args.cicada:
-        print("install cicada")
-        install_cicada()
-    setup_bashrc()
+    # utils.call("apt update")
+    # utils.call("apt install htop -y")
+    # if args.clone_test_scripts:
+    #     utils.call("apt install gnuplot-x11 -y")
+    #     utils.call("apt install feh -y")
+    #
+    # setup_vimrc()
+    # install_cockroachdb()
+    #
+    # install_grpc()
+    # install_grpc_go()
+    #
+    # install_smdbrpc_dependencies()
+    # if args.smdbrpc:
+    #     print("install smdbrpc")
+    #     install_smdbrpc()
+    # if args.clone_test_scripts:
+    #     print("clone test scripts")
+    #     clone_test_scripts()
+    # install_cicada_dependencies()
+    # if args.cicada:
+    #     print("install cicada")
+    #     install_cicada()
+    # setup_bashrc()
 
     if not args.cicada:
         utils.call("rm -rf /root/grpc")
