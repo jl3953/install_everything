@@ -119,6 +119,12 @@ def setup_bashrc():
     )
 
 
+def setup_increased_connections():
+    cmd = "cat /root/install_everything/connections.txt >> /etc/security/limits.conf && " \
+          "echo 'session required pam_limits.so' >> /etc/pam.d/common-session"
+    utils.call(cmd)
+
+
 def install_grpc_go():
     utils.call(
         "export GO111MODULE=on; "
@@ -180,7 +186,7 @@ def install_cicada():
         "export PATH=$PATH:/root/.local:/root/.local/bin; "
         "cmake -DLTO=ON -DDEBUG=OFF ..; "
         "make -j; cp ../src/mica/test/*.json .; "
-        "../script/setup.sh 16384 16384; "
+        "../script/setup.sh 32000; "
     )
 
 
@@ -204,7 +210,8 @@ def copy_snapshot(snapshot_name, local_data):
         os.makedirs(snapshot_dir)
 
     utils.call(
-        "cp -r /mydata/snapshots/{0} {1}/{0}".format(snapshot_name, snapshot_dir))
+        "cp -r /mydata/snapshots/{0} {1}/{0}".format(snapshot_name,
+                                                     snapshot_dir))
 
 
 def main():
@@ -247,6 +254,7 @@ def main():
         print("install cicada")
         install_cicada()
     setup_bashrc()
+    setup_increased_connections()
 
     if not args.cicada:
         utils.call("rm -rf /root/grpc")
