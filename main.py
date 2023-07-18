@@ -237,35 +237,35 @@ def main():
         utils.call("apt install feh -y")
 
     setup_vimrc()
-    install_cockroachdb()
+    #install_cockroachdb()
 
-    install_grpc()
-    install_grpc_go()
+    #install_grpc()
+    #install_grpc_go()
 
-    install_smdbrpc_dependencies()
+    #install_smdbrpc_dependencies()
     if args.smdbrpc:
         print("install smdbrpc")
         install_smdbrpc()
     if args.clone_test_scripts:
         print("clone test scripts")
         clone_test_scripts()
-    install_cicada_dependencies()
+    #install_cicada_dependencies()
     if args.cicada:
         print("install cicada")
         install_cicada()
     setup_bashrc()
     setup_increased_connections()
 
-    if not args.cicada:
-        utils.call("rm -rf /root/grpc")
-        utils.call("rm -rf *tar.gz")
+    #if not args.cicada:
+    #    utils.call("rm -rf /root/grpc")
+    #    utils.call("rm -rf *tar.gz")
 
-        # copy over import files
-        copy_import_files(0, 26, "/data")
-        copy_snapshot("50M", "/data")
-        copy_import_files(50, 76, "/data")
-        copy_snapshot("150M", "/data")
-        copy_import_files(150, 176, "/data")
+    #    # copy over import files
+    #    copy_import_files(0, 26, "/data")
+    #    copy_snapshot("50M", "/data")
+    #    copy_import_files(50, 76, "/data")
+    #    copy_snapshot("150M", "/data")
+    #    copy_import_files(150, 176, "/data")
 
     return 0
 
